@@ -8,3 +8,8 @@ to fix "Database odoo_v16 not initialized, you can force it with `-i base`" erro
 An after:
 
 odoo -i base -d odoo_v16 --stop-after-init --db_host=postgres -r odoo -w odoo
+
+
+Start with
+
+docker compose up
