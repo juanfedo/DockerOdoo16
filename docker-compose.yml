@@ -1,0 +1,37 @@
+version: "3"
+services:
+  odoo_v16:
+    image: odoo:16.0
+    depends_on:
+      - postgres
+    ports:
+      - "8069:8069"
+    volumes:
+      - web:/var/lib/odoo
+      - ./addons:/mnt/extra-addons
+      - ./config:/etc/odoo
+      - ./logs/odoo:/var/log/odoo/
+      - ./attachments/data:/opt/odoo-attachments/data/
+    environment:
+      - HOST=postgres
+      - USER=odoo
+      - PASSWORD=myodoo
+
+  postgres:
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=odoo_v16
+      - POSTGRES_USER=odoo      
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - db:/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+    expose:
+      - 5432
+
+
+volumes:
+  db:
+  web:
